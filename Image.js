@@ -48,6 +48,7 @@ var Lightbox = React.createClass({
     minimumZoomScale:   PropTypes.number,
     swipeToDismiss:     PropTypes.bool,
     touchableComponent: PropTypes.func,
+    dragDismissThreshold: PropTypes.number,
   },
 
   _offsetY: 0,
@@ -65,7 +66,8 @@ var Lightbox = React.createClass({
       },
       activeProps: {
         style: {}
-      }
+      },
+      dragDismissThreshold: DRAG_DISMISS_THRESHOLD,
     };
   },
 
@@ -208,12 +210,14 @@ var Lightbox = React.createClass({
         };
       }
 
+      var dragDismissThreshold = this.props.dragDismissThreshold;
+
       if(this.props.swipeToDismiss) {
         route.passProps = {
           ...route.passProps,
           alwaysBounceVertical: true,
           onScrollEndDrag: event => {
-            if(event.nativeEvent.contentOffset.y + event.nativeEvent.contentInset.top <= -DRAG_DISMISS_THRESHOLD || event.nativeEvent.contentSize.height - event.nativeEvent.layoutMeasurement.height - event.nativeEvent.contentOffset.y <= -DRAG_DISMISS_THRESHOLD) {
+            if(event.nativeEvent.contentOffset.y + event.nativeEvent.contentInset.top <= -dragDismissThreshold || event.nativeEvent.contentSize.height - event.nativeEvent.layoutMeasurement.height - event.nativeEvent.contentOffset.y <= -dragDismissThreshold) {
               if(this._scrollView) {
                 // Disable bouncing for better closing animation performance
                 this._scrollView.setNativeProps({

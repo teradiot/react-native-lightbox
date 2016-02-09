@@ -82,6 +82,7 @@ var RootView = React.createClass({
           style={styles.contain}
           maximumZoomScale={2}
           source={[IMAGES.partyPig, IMAGES.hatHampster]}
+          dragDismissThreshold={30}
           />
         <View style={styles.text}><Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Text></View>
         <TouchableHighlight onPress={event => this._navigateToArticle(IMAGES.partyPig)}>
